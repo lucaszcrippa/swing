@@ -1,71 +1,56 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ConversorTemperatura {
+private double temp;
+    private String clima;
 
-    public static void main(String[] args) {
-        // Criando a janela principal
-        JFrame frame = new JFrame("Conversor de Temperatura");
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
-
-        // Componentes da interface
-        JLabel labelCelsius = new JLabel("Temperatura em Celsius:");
-        JTextField campoCelsius = new JTextField(10);
-        JButton botaoConverter = new JButton("Converter");
-        JLabel labelResultado = new JLabel("Tipo de clima:");
-        JLabel labelTipoClima = new JLabel("");
-        
-        // Adicionando os componentes à janela
-        frame.add(labelCelsius);
-        frame.add(campoCelsius);
-        frame.add(botaoConverter);
-        frame.add(labelResultado);
-        frame.add(labelTipoClima);
-
-        // Ação do botão para converter
-        botaoConverter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    double temperaturaCelsius = Double.parseDouble(campoCelsius.getText());
-                    ConversorTemperatura conversor = new ConversorTemperatura(temperaturaCelsius);
-                    String tipoClima = conversor.getTipoClima();
-                    labelTipoClima.setText(tipoClima);
-                    
-                    // Alterando a cor do texto conforme o tipo de clima
-                    switch (tipoClima) {
-                        case "Frio":
-                            labelTipoClima.setForeground(Color.BLUE);
-                            break;
-                        case "Agradável":
-                            labelTipoClima.setForeground(Color.GREEN);
-                            break;
-                        case "Quente":
-                            labelTipoClima.setForeground(Color.ORANGE);
-                            break;
-                        case "Muito quente":
-                            labelTipoClima.setForeground(Color.RED);
-                            break;
-                    }
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Por favor, insira um valor numérico válido para a temperatura.");
-                }
-            }
-        });
-
-        // Tornando a janela visível
-        frame.setVisible(true);
+    public double getTemp() {
+        return temp;
     }
 
-    private ConversorTemperatura(double temperaturaCelsius) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setTemp(double temp) {
+        this.temp = temp;
     }
 
-    private String getTipoClima() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getClima() {
+        return clima;
     }
+
+    public void setClima(String clima) {
+        this.clima = clima;
+    }
+
+    public ConversorTemperatura(double temp) {
+        this.temp = temp;
+    }
+
+    public double temperaturaFah() {
+        double conta = (temp - 32) * 5 / 9;
+        return conta;
+    }
+
+    public double temperaturaCell() {
+        double conta = (temp * 9 / 5) + 32;
+        return conta;
+    }
+
+    public String mostrarClima() {
+        if (temp <= 64.4) {
+            return "Clima frio.";
+        } else if (temp >= 66.2 && temp <= 73.4) {
+            return "Clima agradável.";
+        } else if (temp >= 75.2 && temp <= 95) {
+            return "Clima quente.";
+        } else {
+            return "Clima muito quente.";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ConversorTemp{" + temp + '}';
+    }
+    
+    
+    
 }
+
